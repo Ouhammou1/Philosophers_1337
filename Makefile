@@ -1,6 +1,6 @@
 CC =CC
 CFLAGS= -Wall -Wextra -Werror
-CFILES= parsing.c philo.c utils.c data_init.c 
+CFILES= parsing.c philo.c utils.c data_init.c save_function.c
 
 OBJS= $(CFILES:.c=.o)
 NAME = philo

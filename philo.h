@@ -18,7 +18,7 @@ typedef struct s_fork
     pthread_mutex_t fork;
 } t_fork;
 
-
+ 
 typedef struct s_philo 
 {
 	int id;
@@ -45,7 +45,14 @@ struct s_table
 	t_philo *philos;
 };
 
-void 	print_eror(char *str);
-void	parse_input( t_table *table ,char **av);
 long  long int    ft_atoi(const char *str);
+void 		print_eror(char *str);
+void		parse_input( t_table *table ,char **av);
+void 		*safe_malloc(size_t size);
+void	 	data_init(t_table *table);
+void		handle_mutex(pthread_mutex_t *mutex);
+
+
+
+
 #endif
