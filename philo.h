@@ -50,9 +50,13 @@ void 		print_eror(char *str);
 void		parse_input( t_table *table ,char **av);
 void 		*safe_malloc(size_t size);
 void	 	data_init(t_table *table);
-void		handle_mutex(pthread_mutex_t *mutex);
+void 		save_metux_handle(pthread_mutex_t *mutex , char *s);
+int 		ft_strcmp( char *s1,  char *s2);
+
+
 
 
 
 
 #endif
+
