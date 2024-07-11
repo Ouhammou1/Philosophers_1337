@@ -27,8 +27,9 @@ void eating(t_philo *philo)
 	pthread_mutex_lock(&philo->table->forks[philo->fork_id_right]);
 
 
-	printf("Time %u  | Philo id = %d | status : %s  %d \n", get_time(), philo->id , "taking fork", philo->fork_id_left);
-	printf("Time %u  | Philo id = %d | status : %s  %d \n", get_time(), philo->id , "taking fork", philo->fork_id_right);
+	printf(RED "Time %u" RESET " | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s %d\n" RESET, get_time(), philo->id, "taking fork", philo->fork_id_left);
+
+	printf(RED "Time %u "RESET" | "YELLOW" Philo id = %d" RESET " | "CYAN" status : %s  %d \n" RESET, get_time(), philo->id , "taking fork", philo->fork_id_right);
 
 
 	unsigned int  start =  get_time();
@@ -38,13 +39,14 @@ void eating(t_philo *philo)
 	while (tmp - start <= philo->table->time_to_eat)
 	{
 		tmp = get_time();
-		printf("Time %u  | Philo id = %d | status : %s  \n", get_time(), philo->id , "is eating");
+		printf(RED "Time %u" RESET " | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s\n" RESET, get_time(), philo->id, "is eating");
 		usleep(150000);
 	}
 
+	printf(RED"time %u  "RESET"| " YELLOW "Philo id = %d" RESET " |  "CYAN "status : %s  %d\n"RESET, get_time(), philo->id, "putting fork", philo->fork_id_left);
 
-	printf("time %u  | Philo id = %d | status : %s  %d \n", get_time(), philo->id , "putting  fork", philo->fork_id_left);
-	printf("time %u  | Philo id = %d | status : %s  %d \n", get_time(), philo->id , "putting fork", philo->fork_id_right);
+	printf(RED"time %u  "RESET"| " YELLOW "Philo id = %d" RESET " | " CYAN "status :  %s %d\n"RESET, get_time(), philo->id, "putting fork", philo->fork_id_right);
+
 
 
 	pthread_mutex_unlock(&philo->table->forks[philo->fork_id_left]);

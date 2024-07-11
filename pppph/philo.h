@@ -6,7 +6,7 @@
 /*   By: bouhammo <bouhammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:42:32 by bouhammo          #+#    #+#             */
-/*   Updated: 2024/07/11 21:46:10 by bouhammo         ###   ########.fr       */
+/*   Updated: 2024/07/11 22:39:25 by bouhammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include <stdbool.h>
+
+#define RESET       "\033[0m"
+#define RED         "\033[0;31m"
+#define GREEN       "\033[0;32m"
+#define YELLOW      "\033[0;33m"
+#define BLUE        "\033[0;34m"
+#define MAGENTA     "\033[0;35m"
+#define CYAN        "\033[0;36m"
+#define WHITE       "\033[0;37m" 
 
 
 typedef struct s_table t_table;
