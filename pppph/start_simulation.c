@@ -1,17 +1,33 @@
 #include  "philo.h"
 
+
 void 	start_simulation(t_table *table )
 {
 	int  i =0;
 	int ret;
+	table->simulation_running = 1;
 	while (i <  table->num_philo)
 	{
 		ret = pthread_create(&table->philos[i].thread, NULL , philo_life_cycle, &table->philos[i]);
 		if(ret != 0)
 			printf_error("Error creating thread");
-		
-		// printf("ret = %d  	|| 		num of the philo = %d \n", ret , table->philos[i].id);
 		i++;
+	}
+	while ( table->simulation_running)
+	{
+		ft_usleep(100);
+		i = 0;
+		if(table->meals_required != -1)
+		{
+			while ( i < table->num_philo && table->philos[i].meals_eaten >= table->meals_required )
+				i++;
+			if ( i == table->num_philo)
+			{
+				table->simulation_running = 0;
+				printf("OK\n");
+				break;
+			}
+		}
 	}
 	int j = 0;
 	while ( j < table->num_philo)
@@ -21,49 +37,53 @@ void 	start_simulation(t_table *table )
 	}
 }
 
+
+
 void eating(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->forks[philo->fork_id_left]);
 	pthread_mutex_lock(&philo->table->forks[philo->fork_id_right]);
 
-
-	printf(RED "Time %u" RESET " | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s %d\n" RESET, get_time(), philo->id, "taking fork", philo->fork_id_left);
-
-	printf(RED "Time %u "RESET" | "YELLOW" Philo id = %d" RESET " | "CYAN" status : %s  %d \n" RESET, get_time(), philo->id , "taking fork", philo->fork_id_right);
+	print_output(philo, "taking fork", philo->fork_id_left);
+	print_output(philo, "taking fork", philo->fork_id_right);
 
 
-	unsigned int  start =  get_time();
-	unsigned int  tmp   =  get_time();
-	// printf("\n\n\n BM tmp = %u  \n  start =  %u \n tmp - start = %u \n time to eat = %d \n\n\n",tmp, start , tmp - start ,philo->table->time_to_eat);
-
-	while (tmp - start <= philo->table->time_to_eat)
-	{
-		tmp = get_time();
-		printf(RED "Time %u" RESET " | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s\n" RESET, get_time(), philo->id, "is eating");
-		usleep(150000);
-	}
-
-	printf(RED"time %u  "RESET"| " YELLOW "Philo id = %d" RESET " |  "CYAN "status : %s  %d\n"RESET, get_time(), philo->id, "putting fork", philo->fork_id_left);
-
-	printf(RED"time %u  "RESET"| " YELLOW "Philo id = %d" RESET " | " CYAN "status :  %s %d\n"RESET, get_time(), philo->id, "putting fork", philo->fork_id_right);
+	print_output(philo, "🍽️  is eating", 0);
+	ft_usleep(philo->table->time_to_eat);
 
 
+	print_output(philo, "putting fork", philo->fork_id_left);
+	print_output(philo, "putting fork", philo->fork_id_right);
 
 	pthread_mutex_unlock(&philo->table->forks[philo->fork_id_left]);
 	pthread_mutex_unlock(&philo->table->forks[philo->fork_id_right]);
+	philo->meals_eaten++;
 }
 
+
+void	sleeping( t_philo *philo)
+{
+	print_output(philo, "🥱  is sleeping", 0);
+	ft_usleep(philo->table->time_to_sleep);
+}
+
+void	thinking(t_philo *philo)
+{
+	print_output(philo, "🤔  is thinking", 0);
+	ft_usleep(philo->table->time_to_sleep);
+}
 
 
 void	*philo_life_cycle(void *data)
 {
-	char *ptr = "One philo is eating\n";
 
 	t_philo *philo = (t_philo *)data;
-	eating(philo);	
-
-	// printf("\n\n\n  get_time = %lld  \n  start =  %lld \n  time to die = %ld \n",get_time() , start , philo->table->time_to_die);
-
-	return (ptr);
+	while (philo->table->simulation_running)
+	{
+		eating(philo);	
+		sleeping(philo);
+		thinking(philo);
+	}
+	return (NULL);
 }
 

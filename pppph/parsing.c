@@ -4,7 +4,7 @@ int	ft_isdigit(int c)
 
 {
 	if (c >= 48 && c <= 57)
-	{
+	{ 
 		return (1);
 	}
 	return (0);
@@ -19,7 +19,7 @@ void	parsing_data(t_table *table , int  ac , char **av)
 		while (av[i][j] != '\0')
 		{
 			if( ft_isdigit(av[i][j]) == 0)
-				printf_error("Enter Numbers Please !\n");
+				printf_error("Enter Numbers Please !");
 			j++;
 		}
 		i++;
@@ -31,7 +31,7 @@ void	parsing_data(t_table *table , int  ac , char **av)
 	if (av[5])
 		table->meals_required = ft_atoi(av[5]);
 	else
-		table->meals_required = 0;
+		table->meals_required = -1;
 }
 
 void		data_init( t_table  *table)
@@ -39,9 +39,9 @@ void		data_init( t_table  *table)
 	int i;
 
 	table->philos = save_memory(sizeof(t_philo) * table->num_philo);
-	table->forks = save_memory(sizeof(pthread_mutex_t) * table->num_philo);
+	table->forks  = save_memory(sizeof(pthread_mutex_t) * table->num_philo);
 	table->simulation_running = true;
-
+	table->start_time = get_time();
 	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
 		printf_error("Mutex init of print_lock is failed");
 	

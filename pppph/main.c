@@ -12,7 +12,7 @@ int main(int ac , char **av)
 		start_simulation(&table);
 	}
 	else
-		printf_error("Error: Wrong number of arguments\n");
+		printf_error("Error: Wrong number of arguments !");
 
 	return (0);
 }

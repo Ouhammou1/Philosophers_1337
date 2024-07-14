@@ -6,7 +6,7 @@
 /*   By: bouhammo <bouhammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:42:32 by bouhammo          #+#    #+#             */
-/*   Updated: 2024/07/11 22:39:25 by bouhammo         ###   ########.fr       */
+/*   Updated: 2024/07/14 10:19:28 by bouhammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ struct s_table
 	pthread_mutex_t *forks;
 	bool  	simulation_running;
 	pthread_mutex_t print_lock;
+	unsigned int start_time;
 };
 
 long long int  	ft_atoi(const char *str);
@@ -67,4 +68,11 @@ void			start_simulation(t_table *table);
 void			*philo_life_cycle(void *philo);
 // void			print_status(t_philo *philo , char *status , int id_fork);
 void 			eating(t_philo *philo);
+void			sleeping( t_philo *philo);
+void			thinking(t_philo *philo);
+void			ft_usleep(unsigned int time);
+void			print_output( t_philo *philo, char *status, int id_fork);
+
+
+
 #endif

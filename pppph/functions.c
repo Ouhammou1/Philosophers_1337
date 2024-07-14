@@ -2,7 +2,7 @@
 
 void	printf_error(char 	*str)
 {
-	printf("%s\n", str);
+	printf(RED "%s\n" RESET, str);
 	exit(1);
 }
 
@@ -22,12 +22,17 @@ unsigned int  get_time()
 	gettimeofday(&av  ,NULL);
 	return ( (av.tv_sec * 1000) + (av.tv_usec / 1000));
 }
-// void	print_status(t_philo *philo , char *status , int id_fork)
-// {
-// 	long long int time;
-// 	time =  get_time();
-// 	pthread_mutex_lock(&philo->table->print_lock);
-// 	printf("time %lld | Philo id = %d | status %s\n", time, philo->id , status);
-// 	pthread_mutex_unlock(&philo->table->print_lock);
-// }
- 
+
+ void ft_usleep(unsigned int time)
+{
+	unsigned int start = get_time();
+	while (get_time() - start < time)
+	{
+		usleep(100);
+	}
+}
+
+void 	print_output( t_philo *philo, char *status, int id_fork)
+{
+	printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s %d\n" RESET, get_time()- philo->table->start_time, philo->id, status, id_fork);
+}
