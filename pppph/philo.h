@@ -6,7 +6,7 @@
 /*   By: bouhammo <bouhammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:42:32 by bouhammo          #+#    #+#             */
-/*   Updated: 2024/07/14 10:19:28 by bouhammo         ###   ########.fr       */
+/*   Updated: 2024/07/15 18:35:49 by bouhammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,25 @@ typedef struct s_philo
 	t_table *table;
 	int fork_id_left;
 	int fork_id_right;
+	unsigned int time;
+	
 } t_philo;
 
 struct s_table
 {
 	t_philo *philos;
 	int num_philo;
-	int time_to_die;
+	unsigned int  time_to_die;
 	unsigned int   time_to_eat;
 	unsigned int  time_to_sleep;
 	int meals_required;
 	pthread_mutex_t *forks;
-	bool  	simulation_running;
+	int  	simulation_running;
+	bool 	philo_is_die;
 	pthread_mutex_t print_lock;
 	unsigned int start_time;
+	int a;
+	// unsigned int time;
 };
 
 long long int  	ft_atoi(const char *str);
@@ -72,7 +77,7 @@ void			sleeping( t_philo *philo);
 void			thinking(t_philo *philo);
 void			ft_usleep(unsigned int time);
 void			print_output( t_philo *philo, char *status, int id_fork);
-
+void print_is_die(t_table *s_table);
 
 
 #endif

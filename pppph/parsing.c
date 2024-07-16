@@ -24,9 +24,9 @@ void	parsing_data(t_table *table , int  ac , char **av)
 		}
 		i++;
 	}
-	table->num_philo = ft_atoi(av[1]);
-	table->time_to_die = ft_atoi(av[2]);
-	table->time_to_eat = ft_atoi(av[3]);
+	table->num_philo     = ft_atoi(av[1]);
+	table->time_to_die   = ft_atoi(av[2]);
+	table->time_to_eat   = ft_atoi(av[3]);
 	table->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
 		table->meals_required = ft_atoi(av[5]);
@@ -40,7 +40,8 @@ void		data_init( t_table  *table)
 
 	table->philos = save_memory(sizeof(t_philo) * table->num_philo);
 	table->forks  = save_memory(sizeof(pthread_mutex_t) * table->num_philo);
-	table->simulation_running = true;
+	table->simulation_running = 1;
+	table->philo_is_die = false;
 	table->start_time = get_time();
 	if (pthread_mutex_init(&table->print_lock, NULL) != 0)
 		printf_error("Mutex init of print_lock is failed");
@@ -54,11 +55,13 @@ void		data_init( t_table  *table)
 		table->philos[i].table = table;
 		table->philos[i].fork_id_left= i;
 		table->philos[i].fork_id_right = (i + 1) % table->num_philo;
-		if ( pthread_mutex_init(&table->forks[i], NULL) !=0)
+		table->philos[i].time = 0;
+		if (pthread_mutex_init(&table->forks[i], NULL) !=0)
 			printf_error("Mutex init  of forks[i] is failed");	
-
 		i++;
 	}
+	if ( pthread_mutex_init(&table->print_lock, NULL) !=0)
+			printf_error("Mutex init  of forks[i] is failed");	
 		// printffff(table);
 }
 

@@ -34,5 +34,23 @@ unsigned int  get_time()
 
 void 	print_output( t_philo *philo, char *status, int id_fork)
 {
-	printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s %d\n" RESET, get_time()- philo->table->start_time, philo->id, status, id_fork);
+	if(!philo->table->a)
+	{
+		pthread_mutex_lock(&philo->table->print_lock);
+		printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s" RESET " " MAGENTA" %d\n" RESET, get_time()- philo->table->start_time, philo->id, status, id_fork);
+		pthread_mutex_unlock(&philo->table->print_lock);
+		
+	}
+		// pthread_mutex_lock(&philo->table->print_lock);
+		// printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s" RESET " " MAGENTA" %d\n" RESET, get_time()- philo->table->start_time, philo->id, status, id_fork);
+		// pthread_mutex_unlock(&philo->table->print_lock);
+}
+
+void print_is_die(t_table *table)
+{
+	pthread_mutex_lock(&table->print_lock);
+	printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s\n", get_time()- table->start_time, table->philos->id, "-<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>> is died");
+	// exit(1);
+	pthread_mutex_unlock(&table->print_lock);
+
 }

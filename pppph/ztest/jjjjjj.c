@@ -260,3 +260,66 @@ int main(int ac, char **av)
 
     return 0;
 }
+
+
+///////////////////////////////////////////////////////////////////
+//////////////////////
+/////////////////////////////
+///////////////////////////////////
+///////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
+
+
+void 	start_simulation(t_table *table )
+{
+	int  i =0;
+	int k =0;
+
+	int ret;
+	table->simulation_running = 1;
+	while (i <  table->num_philo)
+	{
+		ft_usleep(100);
+		ret = pthread_create(&table->philos[i].thread, NULL , philo_life_cycle, &table->philos[i]);
+		if(ret != 0)
+			printf_error("Error creating thread");
+		i++;
+	}
+
+	while ( table->simulation_running )
+	{
+		ft_usleep(100);
+		if(table->meals_required != -1)
+		{
+			while ( k < table->num_philo && table->philos[k].meals_eaten >= table->meals_required )
+				k++;
+			if( k == table->num_philo)
+			{
+				table->a = 1;
+				table->simulation_running = 0;
+				printf("OK\n");
+				break;
+			}
+
+		}
+	
+		int j = 0;
+		while (j <  table->num_philo)
+		{
+			if(get_time() - table->philos[j].time >=  table->time_to_die)
+			{
+				table->philo_is_die = true;
+				print_output(table->philos, "IMOT AWA IMOT !!!!!!!!", table->philos->id);
+				return;
+			}
+			j++;
+		}
+	}
+	int l = 0;
+	while ( l < table->num_philo)
+	{
+		pthread_join(table->philos[l].thread , NULL);
+		l++;	
+	}
+}
