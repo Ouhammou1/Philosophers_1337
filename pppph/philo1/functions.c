@@ -32,13 +32,12 @@ unsigned int  get_time()
 	}
 }
 
-void 	print_output( t_philo *philo, char *status)
+void 	print_output( t_philo *philo, char *status, int id_fork)
 {
 	if(!philo->table->a)
 	{
 		pthread_mutex_lock(&philo->table->print_lock);
-		// printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s" RESET " " MAGENTA" %d\n" RESET, get_time() - philo->table->start_time, philo->id, status, id_fork);
-		printf("%u %d %s\n", get_time() - philo->table->start_time, philo->id, status);
+		printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s" RESET " " MAGENTA" %d\n" RESET, get_time()- philo->table->start_time, philo->id, status, id_fork);
 		pthread_mutex_unlock(&philo->table->print_lock);
 		
 	}

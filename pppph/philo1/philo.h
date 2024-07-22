@@ -6,7 +6,7 @@
 /*   By: bouhammo <bouhammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:42:32 by bouhammo          #+#    #+#             */
-/*   Updated: 2024/07/22 22:46:06 by bouhammo         ###   ########.fr       */
+/*   Updated: 2024/07/21 12:52:51 by bouhammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_philo
 	t_table *table;
 	int fork_id_left;
 	int fork_id_right;
-	pthread_mutex_t time_mutex;
 	
 	unsigned int time;
 	
@@ -56,14 +55,11 @@ struct s_table
 	unsigned int   time_to_eat;
 	unsigned int  time_to_sleep;
 	int 	meals_required;
-	long  	simulation_running;
+	int  	simulation_running;
 	bool 	philo_is_die;
-	bool 	ready;
 	pthread_mutex_t *forks;
 	pthread_mutex_t print_lock;
-	pthread_mutex_t table_ready;
 	pthread_mutex_t print_is_die;
-	pthread_mutex_t stop_mutex;
 	unsigned int start_time;
 	int a;
 	// unsigned int time;
@@ -74,7 +70,7 @@ void			parsing_data(t_table *table , int ac , char **av);
 void			printf_error(char 	*str);
 void 			*save_memory(size_t size);
 void			data_init( t_table  *table);
-// void 			printf(t_table *table);
+void 			printffff(t_table *table);
 unsigned int 	get_time();
 void			start_simulation(t_table *table);
 void			*philo_life_cycle(void *philo);
@@ -83,7 +79,7 @@ void 			eating(t_philo *philo);
 void			sleeping( t_philo *philo);
 void			thinking(t_philo *philo);
 void			ft_usleep(unsigned int time);
-void			print_output( t_philo *philo, char *status);
+void			print_output( t_philo *philo, char *status, int id_fork);
 void print_is_die(t_table *s_table);
 
 
