@@ -6,7 +6,7 @@
 /*   By: bouhammo <bouhammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/09 11:42:32 by bouhammo          #+#    #+#             */
-/*   Updated: 2024/07/23 15:42:51 by bouhammo         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:29:55 by bouhammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ typedef struct s_philo
 	int fork_id_left;
 	int fork_id_right;
 	pthread_mutex_t time_mutex;
-	pthread_mutex_t meal_mutex;
-	bool 	finish_eat;
 	
 	unsigned int time;
 	
@@ -66,6 +64,8 @@ struct s_table
 	pthread_mutex_t table_ready;
 	pthread_mutex_t print_is_die;
 	pthread_mutex_t stop_mutex;
+	pthread_mutex_t incr;
+	pthread_mutex_t inct_meals_eaten;
 	unsigned int start_time;
 	int a;
 	// unsigned int time;
@@ -87,7 +87,6 @@ void			thinking(t_philo *philo);
 void			ft_usleep(unsigned int time);
 void			print_output( t_philo *philo, char *status);
 void print_is_die(t_table *s_table);
-long get_long(pthread_mutex_t *mutex, long *value);
 
 
 #endif

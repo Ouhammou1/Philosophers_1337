@@ -28,20 +28,20 @@ unsigned int  get_time()
 	unsigned int start = get_time();
 	while((get_time() - start) < time)
 	{
-		usleep(100);
+		usleep(500);
 	}
 }
 
 void 	print_output( t_philo *philo, char *status)
 {
-	// if(!philo->table->a)
-	// {
+	if(!philo->table->a)
+	{
 		pthread_mutex_lock(&philo->table->print_lock);
 		// printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s" RESET " " MAGENTA" %d\n" RESET, get_time() - philo->table->start_time, philo->id, status, id_fork);
 		printf("%u %d %s\n", get_time() - philo->table->start_time, philo->id, status);
 		pthread_mutex_unlock(&philo->table->print_lock);
 		
-	// }
+	}
 		// pthread_mutex_lock(&philo->table->print_lock);
 		// printf(RED "Time %u "RESET" | " YELLOW "Philo id = %d" RESET " | " CYAN "status : %s" RESET " " MAGENTA" %d\n" RESET, get_time()- philo->table->start_time, philo->id, status, id_fork);
 		// pthread_mutex_unlock(&philo->table->print_lock);
