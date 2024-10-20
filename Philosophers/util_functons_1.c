@@ -1,44 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   util_functons_1.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bouhammo <bouhammo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/22 16:17:50 by bouhammo          #+#    #+#             */
-/*   Updated: 2024/10/05 19:28:01 by bouhammo         ###   ########.fr       */
+/*   Created: 2024/10/18 12:32:50 by bouhammo          #+#    #+#             */
+/*   Updated: 2024/10/18 12:35:44 by bouhammo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "philo.h"
 
-void	handl_sig_exec(int sig)
+void	ft_free(t_table *table)
 {
-	if (sig == SIGQUIT)
-	{
-		signal(SIGQUIT, SIG_IGN);
-	}
+	free(table->philos);
+	table->philos = NULL;
+	free(table->forks);
+	table->forks = NULL;
+	return ;
 }
 
-void	hhandle_sig(int sig)
+void	ft_print(char *ptr)
 {
-	if (sig == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		g_exit_status = 1;
-	}
+	printf("%s", ptr);
+	return ;
 }
 
-int	chech_fork(int pid)
+int	philo_is_died(t_table *table)
 {
-	if (pid == -1)
+	pthread_mutex_lock(&table->table_ready);
+	if (table->stop == 1)
 	{
-		perror("fork");
-		g_exit_status = 1;
+		pthread_mutex_unlock(&table->table_ready);
 		return (1);
 	}
+	pthread_mutex_unlock(&table->table_ready);
 	return (0);
 }
